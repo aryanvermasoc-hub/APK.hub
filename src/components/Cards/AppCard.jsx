@@ -1,0 +1,67 @@
+import { Link } from 'react-router-dom';
+
+const typeColors = {
+  'APK': 'badge-green',
+  'Website': 'badge-blue',
+  'APK + Website': 'badge-orange',
+};
+
+const AppCard = ({ app }) => {
+  return (
+    <div className="app-card group">
+      {/* Icon */}
+      <div className="app-icon-wrapper">
+        {app.icon_url ? (
+          <img src={app.icon_url} alt={app.title} className="w-full h-full object-cover" />
+        ) : (
+          <span>📱</span>
+        )}
+      </div>
+
+      {/* Title & badge */}
+      <h3 className="text-center truncate px-2 mb-1" style={{
+        fontFamily: 'var(--font-display)',
+        fontSize: '1rem',
+        fontWeight: 600,
+        letterSpacing: '0.04em',
+        textTransform: 'uppercase',
+        color: 'var(--text)',
+        margin: 0,
+      }}>
+        {app.title || 'Untitled App'}
+      </h3>
+
+      <div className="flex justify-center mb-4 mt-1">
+        <span className={`badge ${typeColors[app.type] || 'badge-gray'}`}>
+          {app.type}
+        </span>
+      </div>
+
+      {app.category && (
+        <p className="text-center mb-3" style={{
+          fontFamily: 'var(--font-mono)',
+          fontSize: '0.68rem',
+          letterSpacing: '0.08em',
+          textTransform: 'uppercase',
+          color: 'var(--text-dim)',
+          margin: '0 0 0.75rem',
+        }}>
+          {app.category}
+        </p>
+      )}
+
+      {/* CTA */}
+      <div className="mt-auto">
+        <Link
+          to={`/apps/${app.id}`}
+          className="btn btn-secondary w-full"
+          style={{ width: '100%' }}
+        >
+          View Details
+        </Link>
+      </div>
+    </div>
+  );
+};
+
+export default AppCard;
