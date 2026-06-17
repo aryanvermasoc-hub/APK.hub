@@ -1,9 +1,9 @@
 import React from 'react';
+import { Link } from 'react-router-dom'; // Required for internal page routing
 
 export default function Footer() {
   return (
     <footer className="w-full pt-12 pb-8" style={{ backgroundColor: 'var(--bg)' }}>
-      {/* bg-gray-950 matches the ultra-dark look of APK.hub */}
       <div className="max-w-4xl mx-auto px-6 text-center">
         
         {/* Heading */}
@@ -44,8 +44,15 @@ export default function Footer() {
           </a>
         </div>
 
-        {/* Divider */}
-        <div className="mt-12 mb-8 border-t border-gray-800"></div>
+        {/* NEW: Navigation Links for Legal / Info Pages */}
+        <div className="flex flex-wrap justify-center gap-6 mt-10 text-sm font-medium text-gray-400">
+          <Link to="/about" className="hover:text-orange-500 transition-colors">About Us</Link>
+          <Link to="/privacy" className="hover:text-orange-500 transition-colors">Privacy Policy</Link>
+          <Link to="/terms" className="hover:text-orange-500 transition-colors">Terms & Conditions</Link>
+        </div>
+
+        {/* Divider (Slightly adjusted top margin to balance the new links) */}
+        <div className="mt-8 mb-8 border-t border-gray-800"></div>
 
         {/* Merged APK.hub Branding & Copyright */}
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">

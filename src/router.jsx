@@ -1,8 +1,6 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 
 // Import all of your page components
-// (Double check these paths match your exact folder structure!)
-// Notice we are adding the final filename to the end of the path!
 import Home from './pages/Home/Home'; 
 import Login from './pages/Login/Login';
 import Register from './pages/Register/Register';
@@ -14,33 +12,41 @@ import AppDetails from './pages/AppDetails/AppDetails';
 import Profile from './pages/Profile/Profile';
 import Layout from './components/Layout/Layout';
 
+// Change from './pages/...' to './components/...'
+import About from './components/About';
+import PrivacyPolicy from './components/PrivacyPolicy';
+import Terms from './components/Terms';
+
 const AppRouter = () => {
   return (
-    <BrowserRouter>
-      <Layout>
-        {/* The <Routes> wrapper ensures only ONE page loads at a time 
+    <Layout>
+      {/* The <Routes> wrapper ensures only ONE page loads at a time 
           based on the URL in the browser's address bar.
-        */}
-        <Routes>
-          {/* Public Routes (Anyone can see these) */}
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          
-          {/* App Directory Routes */}
-          <Route path="/apps" element={<Apps />} />
-          <Route path="/apps/:id" element={<AppDetails />} />
+      */}
+      <Routes>
+        {/* Public Routes (Anyone can see these) */}
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        
+        {/* App Directory Routes */}
+        <Route path="/apps" element={<Apps />} />
+        <Route path="/apps/:id" element={<AppDetails />} />
 
-          {/* Protected / Dashboard Routes */}
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/developer" element={<Developer />} />
-          <Route path="/admin" element={<Admin />} />
-          
-          {/* 404 Catch-All (If they type a weird URL, send them Home) */}
-          <Route path="*" element={<Home />} />
-        </Routes>
-      </Layout>
-    </BrowserRouter>
+        {/* Footer Legal & Info Routes */}
+        <Route path="/about" element={<About />} />
+        <Route path="/privacy" element={<PrivacyPolicy />} />
+        <Route path="/terms" element={<Terms />} />
+
+        {/* Protected / Dashboard Routes */}
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/developer" element={<Developer />} />
+        <Route path="/admin" element={<Admin />} />
+        
+        {/* 404 Catch-All (If they type a weird URL, send them Home) */}
+        <Route path="*" element={<Home />} />
+      </Routes>
+    </Layout>
   );
 };
 

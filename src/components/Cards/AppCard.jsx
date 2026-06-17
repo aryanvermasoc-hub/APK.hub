@@ -38,17 +38,22 @@ const AppCard = ({ app }) => {
       </div>
 
       {app.category && (
-        <p className="text-center mb-3" style={{
+        <p className="text-center mb-2" style={{
           fontFamily: 'var(--font-mono)',
           fontSize: '0.68rem',
           letterSpacing: '0.08em',
           textTransform: 'uppercase',
           color: 'var(--text-dim)',
-          margin: '0 0 0.75rem',
+          margin: '0 0 0.5rem',
         }}>
           {app.category}
         </p>
       )}
+
+      <div className="flex justify-center gap-3 mb-3">
+        <span className="text-xs text-gray-500 font-mono">👁 {app.views || 0}</span>
+        <span className="text-xs text-gray-500 font-mono">⬇ {app.downloads || 0}</span>
+      </div>
 
       {/* CTA */}
       <div className="mt-auto">

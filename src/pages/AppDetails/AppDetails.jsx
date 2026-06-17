@@ -28,11 +28,11 @@ const AppDetails = () => {
 
   const fetchAppDetails = async () => {
     setLoading(true);
+    // Increment the view counter FIRST
+    await supabase.rpc('increment_view_count', { row_id: id });
+    // Then fetch the newly updated data so the UI is perfectly in sync
     const { data, error } = await supabase.from('listings').select('*').eq('id', id).single();
-    if (!error && data) {
-      setApp(data);
-      await supabase.rpc('increment_view_count', { row_id: id });
-    }
+    if (!error && data) setApp(data);
     setLoading(false);
   };
 
@@ -61,6 +61,8 @@ const AppDetails = () => {
 
   const handleDownload = async () => {
     await supabase.rpc('increment_download_count', { row_id: id });
+    // Instantly update the UI so the user sees their download register
+    setApp(prev => ({ ...prev, downloads: (prev.downloads || 0) + 1 }));
     window.open(app.apk_url, '_blank');
   };
 

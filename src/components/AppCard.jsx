@@ -13,7 +13,11 @@ const AppCard = ({ app }) => {
           <h3 style={{ margin: 0, fontSize: '1.05rem', fontFamily: 'var(--font-display)', textTransform: 'uppercase', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden', color: '#ffffff' }}>
             {app.title || app.name}
           </h3>
-          <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.72rem', color: 'var(--text-muted)', letterSpacing: '0.08em', fontWeight: '500' }}>{app.type}</span>
+          <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', flexWrap: 'wrap' }}>
+            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.72rem', color: 'var(--text-muted)', letterSpacing: '0.08em', fontWeight: '500' }}>{app.type}</span>
+            <span style={{ fontSize: '0.7rem', color: 'var(--text-dim)' }}>• 👁 {app.views || 0}</span>
+            <span style={{ fontSize: '0.7rem', color: 'var(--text-dim)' }}>• ⬇ {app.downloads || 0}</span>
+          </div>
         </div>
       </div>
     <p className="line-clamp-3" style={{ fontSize: '0.9rem', flexGrow: 1, margin: 0, color: '#ffffff' }}>

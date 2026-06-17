@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import useAuthStore from '../../store/authStore';
+import InstallButton from '../InstallButton';
 
 const Navbar = () => {
   const { user, role, logout } = useAuthStore();
@@ -63,6 +64,7 @@ const Navbar = () => {
 
           {/* Auth Controls – Desktop */}
           <div className="hidden md:flex items-center gap-3">
+            <InstallButton />
             {user ? (
               <>
                 <Link to="/profile" className="flex items-center gap-2 no-underline group">
@@ -101,6 +103,9 @@ const Navbar = () => {
         {/* Mobile Menu */}
         {menuOpen && (
           <div className="md:hidden border-t border-[var(--border)] py-4 flex flex-col gap-2">
+            <div className="px-2 mb-2">
+              <InstallButton />
+            </div>
             <Link to="/" className="sidebar-nav-btn" onClick={() => setMenuOpen(false)}>🏠 Home</Link>
             <Link to="/apps" className="sidebar-nav-btn" onClick={() => setMenuOpen(false)}>📦 Browse Apps</Link>
             {(role === 'Developer' || role === 'Admin') && (
@@ -117,6 +122,7 @@ const Navbar = () => {
                 </>
               ) : (
                 <>
+                  <div className="flex items-center gap-4"></div>
                   <Link to="/login" className="btn btn-ghost btn-sm" onClick={() => setMenuOpen(false)}>Login</Link>
                   <Link to="/register" className="btn btn-primary btn-sm" onClick={() => setMenuOpen(false)}>Register</Link>
                 </>

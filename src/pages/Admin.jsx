@@ -7,7 +7,7 @@ export default function Admin() {
   const { role } = useAuthStore();
   
   const [activeTab, setActiveTab] = useState('dashboard');
-  const [stats, setStats] = useState({ totalUsers: 0, totalListings: 0, totalReviews: 0, totalDownloads: 0 });
+  const [stats, setStats] = useState({ totalUsers: 0, totalListings: 0, totalReviews: 0, totalDownloads: 0, totalViews: 0 });
   
   const [usersList, setUsersList] = useState([]);
   const [listings, setListings] = useState([]);
@@ -39,11 +39,13 @@ export default function Admin() {
       setReviews(rData);
 
       const totalDownloads = lData.reduce((acc, curr) => acc + (curr.downloads || 0), 0);
+      const totalViews = lData.reduce((acc, curr) => acc + (curr.views || 0), 0);
       setStats({
         totalUsers: uData.length,
         totalListings: lData.length,
         totalReviews: rData.length,
-        totalDownloads
+        totalDownloads,
+        totalViews
       });
     } catch (error) {
       console.error("Admin fetch error:", error);
@@ -158,6 +160,11 @@ export default function Admin() {
                 <p style={{ margin: 0, fontSize: '2rem', fontWeight: 'bold', color: 'var(--text)' }}>{stats.totalReviews}</p>
               </div>
 
+              <div style={{ padding: 'var(--space-4)', backgroundColor: 'var(--secondary)', borderRadius: 'var(--radius)' }}>
+                <p style={{ margin: 0, fontSize: '0.875rem', fontWeight: '600', color: '#a855f7' }}>Global Views</p>
+                <p style={{ margin: 0, fontSize: '2rem', fontWeight: 'bold', color: 'var(--text)' }}>{stats.totalViews}</p>
+              </div>
+
             </div>
           </div>
         )}
@@ -247,6 +254,7 @@ export default function Admin() {
                   <tr style={{ borderBottom: '2px solid var(--border)', color: 'var(--text-muted)' }}>
                     <th style={{ padding: 'var(--space-3)' }}>Title</th>
                     <th style={{ padding: 'var(--space-3)' }}>Type / Category</th>
+                    <th style={{ padding: 'var(--space-3)' }}>Stats</th>
                     <th style={{ padding: 'var(--space-3)' }}>Status</th>
                     <th style={{ padding: 'var(--space-3)' }}>Actions</th>
                   </tr>
@@ -256,6 +264,7 @@ export default function Admin() {
                     <tr key={app.id} style={{ borderBottom: '1px solid var(--border)' }}>
                       <td style={{ padding: 'var(--space-3)', fontWeight: '600', color: '#ffffff' }}>{app.title}</td>
                       <td style={{ padding: 'var(--space-3)', color: '#ffffff' }}>{app.type} - <span style={{ color: 'var(--text-muted)' }}>{app.category}</span></td>
+                      <td style={{ padding: 'var(--space-3)', color: 'var(--text-muted)', fontSize: '0.875rem' }}>{app.downloads || 0} DLs / {app.views || 0} Views</td>
                       <td style={{ padding: 'var(--space-3)' }}>
                         <span style={{ 
                           padding: 'var(--space-1) var(--space-2)', 
