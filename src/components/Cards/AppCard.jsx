@@ -10,12 +10,12 @@ const AppCard = ({ app }) => {
   return (
     <div className="app-card group">
       {/* Icon */}
-      <div className="app-icon-wrapper">
-        {app.icon_url ? (
-          <img src={app.icon_url} alt={app.title} className="w-full h-full object-cover" />
-        ) : (
-          <span>📱</span>
-        )}
+      <div className="flex justify-center mt-2 mb-2">
+        <img 
+          src={app.icon_url || "https://ui-avatars.com/api/?name=" + app.title + "&background=1f2937&color=fff"} 
+          alt={`${app.title} logo`} 
+          className="w-12 h-12 rounded-lg object-cover bg-gray-800 shrink-0"
+        />
       </div>
 
       {/* Title & badge */}

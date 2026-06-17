@@ -188,7 +188,10 @@ export default function Admin() {
                 <tbody>
                   {usersList.filter(u => u.email?.toLowerCase().includes(searchTerm.toLowerCase())).map(u => (
                     <tr key={u.id} style={{ borderBottom: '1px solid var(--border)' }}>
-                  <td className="break-all" style={{ padding: 'var(--space-3)', fontWeight: '500', color: '#ffffff', maxWidth: '200px' }}>{u.email}</td>
+                  <td className="break-all" style={{ padding: 'var(--space-3)', fontWeight: '500', color: '#ffffff', maxWidth: '200px' }}>
+                    {u.username && <div style={{ fontSize: '1.05rem', color: 'var(--primary)' }}>{u.username}</div>}
+                    <div style={{ fontSize: u.username ? '0.85rem' : '1rem', color: u.username ? 'var(--text-muted)' : '#ffffff' }}>{u.email}</div>
+                  </td>
                       <td style={{ padding: 'var(--space-3)' }}>
                         <span style={{ 
                           padding: 'var(--space-1) var(--space-2)', 
@@ -269,7 +272,7 @@ export default function Admin() {
                         <button onClick={() => togglePublishListing(app.id, app.is_published)} style={{ background: 'none', border: 'none', color: 'var(--primary)', cursor: 'pointer', fontWeight: '500' }}>
                           {app.is_published ? 'Force Unpublish' : 'Force Publish'}
                         </button>
-                      <button onClick={() => deleteListing(app.id)} style={{ background: 'none', border: 'none', color: 'var(--error)', cursor: 'pointer', fontWeight: '500' }}>
+                <button onClick={() => deleteListing(app.id)} style={{ background: 'none', border: 'none', color: '#ffffff', cursor: 'pointer', fontWeight: '500' }}>
                           Delete
                         </button>
                       </td>
@@ -298,7 +301,7 @@ export default function Admin() {
                       <p style={{ margin: '0 0 var(--space-1) 0', color: 'var(--warning)', letterSpacing: '2px' }}>{'★'.repeat(rev.rating)}</p>
                       <p style={{ margin: 0, fontSize: '0.95rem' }}>{rev.comment}</p>
                     </div>
-                    <button onClick={() => deleteReview(rev.id)} className="btn" style={{ backgroundColor: 'color-mix(in srgb, var(--error) 15%, transparent)', color: 'var(--error)' }}>
+                    <button onClick={() => deleteReview(rev.id)} className="btn" style={{ backgroundColor: 'color-mix(in srgb, var(--error) 15%, transparent)', color: '#ffffff' }}>
                       Remove
                     </button>
                   </div>

@@ -39,8 +39,8 @@ const Home = () => {
           .from('listings')
           .select('*')
           .eq('is_published', true)
-          .order('created_at', { ascending: false })
-          .limit(6);
+          .order('views', { ascending: false })
+          .limit(4);
           
         if (error) throw error;
         setRecentApps(data || []);
@@ -144,12 +144,12 @@ const Home = () => {
         </div>
       </section>
 
-      {/* ── RECENTLY ADDED ── */}
+      {/* ── TRENDING APPS ── */}
       <section className="section">
         <div className="container">
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem', flexWrap: 'wrap', gap: '1rem' }}>
             <div className="section-header" style={{ marginBottom: 0 }}>
-              <h2 style={{ fontSize: 'clamp(1.4rem, 2.5vw, 1.8rem)', marginBottom: 0 }}>Recently Added</h2>
+              <h2 style={{ fontSize: 'clamp(1.4rem, 2.5vw, 1.8rem)', marginBottom: 0 }}>Trending Apps</h2>
             </div>
             <Link to="/apps" className="btn btn-ghost btn-sm">
               View All →
@@ -170,15 +170,17 @@ const Home = () => {
               {recentApps.map((app) => (
                 <div key={app._id || app.id} className="app-card">
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.75rem' }}>
-                    <div className="app-icon-wrapper" style={{ margin: 0, width: '3rem', height: '3rem' }}>
-                      {app.icon || '📱'}
-                    </div>
+                    <img 
+                      src={app.icon_url || "https://ui-avatars.com/api/?name=" + (app.title || app.name) + "&background=1f2937&color=fff"} 
+                      alt={`${app.title || app.name} logo`} 
+                      className="w-12 h-12 rounded-lg object-cover bg-gray-800 shrink-0"
+                    />
                     <div>
                   <h3 className="break-all" style={{ margin: 0, fontSize: '1.05rem', fontFamily: 'var(--font-display)', textTransform: 'uppercase', color: '#ffffff' }}>{app.title || app.name}</h3>
                       <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.72rem', color: 'var(--text-muted)', letterSpacing: '0.08em', fontWeight: '500' }}>{app.type}</span>
                     </div>
                   </div>
-                  <p style={{ fontSize: '0.9rem', flexGrow: 1, color: '#ffffff' }}>{app.desc || app.description}</p>
+              <p className="line-clamp-3" style={{ fontSize: '0.9rem', flexGrow: 1, color: '#ffffff' }}>{app.desc || app.description}</p>
                   <div style={{ marginTop: '1rem' }}>
                     <Link to={`/apps/${app._id || app.id}`} className="btn btn-secondary" style={{ width: '100%' }}>
                       View Details

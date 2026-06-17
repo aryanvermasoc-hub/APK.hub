@@ -58,7 +58,7 @@ const Developer = () => {
             const listingIds = currentListings.map(l => l.id);
             const { data: reviewsData, error: reviewsError } = await supabase
               .from('reviews')
-              .select('*, listings(title)')
+              .select('*, listings(title), profiles(username, email)')
               .in('listing_id', listingIds)
               .order('created_at', { ascending: false });
             
@@ -322,7 +322,7 @@ const Developer = () => {
                           {app.is_published ? 'Unpublish' : 'Publish'}
                         </button>
                         <button onClick={() => editListing(app)} style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', fontWeight: '500' }}>Edit</button>
-                        <button onClick={() => deleteListing(app.id)} style={{ background: 'none', border: 'none', color: 'var(--error)', cursor: 'pointer', fontWeight: '500' }}>Delete</button>
+                    <button onClick={() => deleteListing(app.id)} style={{ background: 'none', border: 'none', color: '#ffffff', cursor: 'pointer', fontWeight: '500' }}>Delete</button>
                       </td>
                     </tr>
                   ))}
@@ -344,7 +344,7 @@ const Developer = () => {
                   <div key={rev.id} style={{ padding: 'var(--space-4)', backgroundColor: 'var(--secondary)', borderRadius: 'var(--radius)', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                     <div>
                       <p style={{ margin: '0 0 var(--space-1) 0', fontWeight: '600', color: 'var(--primary)' }}>
-                        {rev.listings?.title} <span style={{ color: 'var(--text-muted)', fontWeight: '400', fontSize: '0.875rem' }}>- by {rev.user_email}</span>
+                        {rev.listings?.title} <span style={{ color: 'var(--text-muted)', fontWeight: '400', fontSize: '0.875rem' }}>- by {rev.profiles?.username || rev.profiles?.email || rev.user_email || 'Unknown User'}</span>
                       </p>
                       <p style={{ margin: '0 0 var(--space-1) 0', color: 'var(--warning)', letterSpacing: '2px' }}>{'★'.repeat(rev.rating)}</p>
                       <p style={{ margin: 0, fontSize: '0.95rem' }}>{rev.comment}</p>
