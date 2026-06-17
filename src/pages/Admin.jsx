@@ -54,15 +54,20 @@ export default function Admin() {
 
   const handleRoleChange = async (userId, newRole) => {
     try {
-      const { error } = await supabase
+      const { data, error } = await supabase
         .from('profiles')
         .update({ role: newRole })
-        .eq('id', userId);
+        .eq('id', userId)
+        .select();
 
       if (error) throw error;
+      if (!data || data.length === 0) {
+        throw new Error("Update failed. Row Level Security (RLS) blocked the action.");
+      }
       setUsersList(usersList.map(u => u.id === userId ? { ...u, role: newRole } : u));
     } catch (error) {
-      console.error("Error updating role:", error);
+      console.error("Error updating role:", error.message);
+      alert("Error: " + error.message);
     }
   };
 
@@ -183,7 +188,7 @@ export default function Admin() {
                 <tbody>
                   {usersList.filter(u => u.email?.toLowerCase().includes(searchTerm.toLowerCase())).map(u => (
                     <tr key={u.id} style={{ borderBottom: '1px solid var(--border)' }}>
-                      <td style={{ padding: 'var(--space-3)', fontWeight: '500', color: '#ffffff' }}>{u.email}</td>
+                  <td className="break-all" style={{ padding: 'var(--space-3)', fontWeight: '500', color: '#ffffff', maxWidth: '200px' }}>{u.email}</td>
                       <td style={{ padding: 'var(--space-3)' }}>
                         <span style={{ 
                           padding: 'var(--space-1) var(--space-2)', 

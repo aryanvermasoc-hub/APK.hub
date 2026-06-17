@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import useAuthStore from '../../store/authStore';
 import Spinner from '../../components/Spinner';
+import { supabase } from '../../services/supabase';
 
 const FEATURES = [
   {
@@ -34,7 +35,15 @@ const Home = () => {
   useEffect(() => {
     const fetchRecentApps = async () => {
       try {
-        setRecentApps([]);
+        const { data, error } = await supabase
+          .from('listings')
+          .select('*')
+          .eq('is_published', true)
+          .order('created_at', { ascending: false })
+          .limit(6);
+          
+        if (error) throw error;
+        setRecentApps(data || []);
       } catch (error) {
         console.error('Failed to fetch recent apps:', error);
       } finally {
@@ -165,7 +174,7 @@ const Home = () => {
                       {app.icon || '📱'}
                     </div>
                     <div>
-                      <h3 style={{ margin: 0, fontSize: '1.05rem', fontFamily: 'var(--font-display)', textTransform: 'uppercase', color: '#ffffff' }}>{app.name}</h3>
+                  <h3 className="break-all" style={{ margin: 0, fontSize: '1.05rem', fontFamily: 'var(--font-display)', textTransform: 'uppercase', color: '#ffffff' }}>{app.title || app.name}</h3>
                       <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.72rem', color: 'var(--text-muted)', letterSpacing: '0.08em', fontWeight: '500' }}>{app.type}</span>
                     </div>
                   </div>

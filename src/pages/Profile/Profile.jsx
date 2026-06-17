@@ -62,7 +62,7 @@ const Profile = () => {
       {/* Profile Header */}
       <section className="card" style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-6)' }}>
         
-        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-6)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-6)', flex: 1, minWidth: 0 }}>
           {/* Avatar */}
           <div style={{ 
             width: '5rem', 
@@ -74,13 +74,14 @@ const Profile = () => {
             alignItems: 'center', 
             justifyContent: 'center', 
             fontSize: '2rem', 
-            fontWeight: 'bold' 
+            fontWeight: 'bold',
+            flexShrink: 0
           }}>
             {user.email.charAt(0).toUpperCase()}
           </div>
           
-          <div>
-            <h1 style={{ margin: 0, fontSize: '1.5rem', color: 'var(--text)' }}>{user.email}</h1>
+          <div style={{ minWidth: 0 }}>
+            <h1 className="break-all text-white" style={{ margin: 0, fontSize: '1.5rem' }}>{user.email}</h1>
             <p style={{ margin: 0, fontSize: '0.875rem', fontWeight: '500', color: 'var(--text-muted)', marginTop: 'var(--space-1)' }}>
               Account Type: <span style={{ color: 'var(--primary)', fontWeight: '600' }}>{role}</span>
             </p>
@@ -100,14 +101,13 @@ const Profile = () => {
           )}
           <button 
             onClick={handleLogout}
-            className="btn"
+            className="btn font-medium transition text-gray-400 hover:text-white"
             style={{ 
               backgroundColor: 'color-mix(in srgb, var(--error) 15%, transparent)', 
-              color: 'var(--error)',
               border: 'none'
             }}
           >
-            Logout
+            LOGOUT
           </button>
         </div>
       </section>
